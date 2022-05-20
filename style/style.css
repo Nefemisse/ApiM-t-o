@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    overflow: hidden;
+    font-family:'Courier New', Courier, monospace;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+i.wi {
+    font-size: 5em;
+    line-height: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+.tooltip {
+    display: none;
+}
