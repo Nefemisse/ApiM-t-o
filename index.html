@@ -3,76 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <link rel="stylesheet" href="./style/style.css">
     <link type="text/css" rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
     <title>My Météo app</title>
+    
   </head>
   <body>
-    <!-- <script>
-      //Récupérer un paramétre de l'url
-      function getParameter() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
 
-        const search = urlParams.get("search");
-        return search;
-      }
-
-      $(document).ready(function () {
-        //Appelle de la fonction au-dessus
-        var ville = getParameter();
-        //Permet de couper une chaine de caractére sur un caractére définie dans slit()
-        var tab = ville.split(",");
-        // Url externe pour récupérer les villes
-        var myUrl =
-          "https://raw.githubusercontent.com/high54/Communes-France-JSON/master/france.json";
-        //fonction interne a jquery pour lire un fichier JSON
-        $.getJSON(myUrl, function (data) {
-          var i = 0;
-          //équivalent de foreach mais en jquery
-          $.each(data, function (key, value) {
-            //toLowerCase() permet de mettre la chaine de caractére en minuscule
-            if (
-              tab[0].toLowerCase() == value.Libelle_acheminement.toLowerCase()
-            ) {
-              //$("ville") equivalent en js vanilla document.getElementById('ville') || .html() permet de modifier le texte de base par la valeur donnée
-              $("#ville").html("Ville : " + tab[0]);
-              $("#code_postal").html("Code Postal : " + value.Code_postal);
-              $("#coordonnees_gps").html(
-                "Coordonnées GPS : " + value.coordonnees_gps
-              );
-            }
-            $("#message").html(
-              "Site en cours de maintenance réservation indisponible, veuillez nous en excusez et merci de cliquez sur ce lien afin de vous permettre d'effectuez votre réservation. Merci pour votre compréhention"
-            );
-            $("#link").attr(
-              "href",
-              "https://www.abritel.fr/search/keywords:" +
-                tab[0].toLowerCase() +
-                "-" +
-                tab[1]
-            );
-            $("#link").html("Vraie Reservation");
-            i++;
-          });
-        }).fail(function () {
-          console.log("An error has occurred.");
-        });
-      });
-    </script> -->
+    <video>
+      <source src="#" type="video/mp4">
+    </video>
     
     <section id="app">
+
       <h1>
-        <span id="ville">Marseille</span>
-        <span class="tooltip">Entrez une autre ville si vous le souhaitez.</span>
+        <span id="ville">Sartrouville</span>
+        <span class="tooltip">Entrez la ville de votre choix.</span>
       </h1>
 
       <i class="wi wi-day-rain"></i>
 
       <h2>
-        <span id="temperature">25</span> C° (<span id="conditions">Ciel dégagé</span>)
+        <span id="temperature">25</span>(<span id="conditions">nuageux</span>)
       </h2>
+      <h3>Détails
+        <div class="detail">
+          <span>Longitude : <span id="lon">54.45</span></span>
+          <span>Latitude : <span id="lat">54.2</span></span>
+          <span>Pays : <span id="pays">FR</span></span>
+        </div>
+      </h3>
 
     </section>
     <script src="./js/app.js"></script>

@@ -1,15 +1,47 @@
+.clouds {
+    background-image: url(../image/image/nuageux.jpg);
+}
+
+.rain {
+    background-image: url(../image/image/pluie.webp);
+}
+
+.snow {
+    background-image: url(../image/image/neige.jpg);
+}
+
+.clear {
+    background-image: url(../image/image/clear.JPG);
+}
+
+.mist {
+    background-image: url(../image/image/brumeux.JPG);
+}
+
+
+
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     height: 100vh;
     overflow: hidden;
     font-family:'Courier New', Courier, monospace;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+section {
+    position: fixed;
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2.5em;
 }
 
 i.wi {
@@ -22,5 +54,36 @@ h2 {
 }
 
 .tooltip {
-    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 80px;
+    background-color: #222;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 12px;
+    transition: opacity 0.3s, top 0.5s;
+}
+
+h1:hover .tooltip {
+    top: -10px;
+    opacity: 1;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.detail span {
+    line-height: 2em;
+}
+
+.detail {
+    opacity: 0;
+}
+
+h3:hover .detail {
+    opacity: 1;
 }
