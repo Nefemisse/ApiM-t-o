@@ -1,9 +1,9 @@
 .clouds {
-    background-image: url(../image/image/nuageux.jpg);
+    background-image: url(../image/image/nuageux.gif);
 }
 
 .rain {
-    background-image: url(../image/image/pluie.webp);
+    background-image: url(../image/image/pluie_fine.gif);
 }
 
 .snow {
@@ -18,7 +18,9 @@
     background-image: url(../image/image/brumeux.JPG);
 }
 
-
+.drizzle {
+    background-image: url(../image/image/pluie.jpg);
+}
 
 body {
     display: flex;
@@ -74,6 +76,10 @@ h1:hover .tooltip {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
+}
+
+#detail {
+    cursor: pointer;
 }
 
 .detail span {
