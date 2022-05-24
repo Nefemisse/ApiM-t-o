@@ -5,6 +5,7 @@ const weatherIcons = {
   Snow: "wi wi-day-snow",
   Mist: "wi wi-day-fog",
   Drizzle: "wi wi-day-sleet",
+  Thunderstorm: "wi wi-day-"
 };
 
 const capitalize = (str) => {
@@ -37,16 +38,27 @@ async function main(/*withIP = true*/) {
     displayWeatherInfos(meteo)
 }
 
+var now = new Date();
+ 
+var annee   = now.getFullYear();
+var mois    = ('0'+(now.getMonth()+1)).slice(-2);
+var jour    = ('0'+now.getDate()   ).slice(-2);
+var heure   = ('0'+now.getHours()  ).slice(-2);
+var minute  = ('0'+now.getMinutes()).slice(-2);
+
+
 function displayWeatherInfos(data) {
     const name = data.name;
     const temperature = data.main.temp + '°C ';
     //const newTemperature = Math.round(temperature)
-    const conditions = data.weather[0].main;
     const description = data.weather[0].description;
+    const conditions = data.weather[0].main;
     const longitude = data.coord.lon;
     const latitude = data.coord.lat;
     const country = data.sys.country;
     const titre = name + '  ' + country + '  ' + temperature + '  ' + capitalize(description);
+    const date = "Nous sommes le "+jour+"/"+mois+"/"+annee+" et il est "+heure+" heure "+minute+" minutes"
+    console.log(data)
     
 
     document.getElementById('ville').textContent = name;
@@ -55,7 +67,8 @@ function displayWeatherInfos(data) {
     document.getElementById('lon').textContent = longitude;
     document.getElementById('lat').textContent = latitude;
     document.querySelector('#pays').textContent = country;
-    document.querySelector('title').textContent = titre;
+    document.getElementsByTagName('title').textContent = titre;
+    document.getElementById('date').textContent = date
     document.querySelector('i.wi').className = weatherIcons[conditions];
 
     document.querySelector('title').textContent = titre;
