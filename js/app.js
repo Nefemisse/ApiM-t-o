@@ -1,91 +1,111 @@
 const weatherIcons = {
-  Rain: "wi wi-day-rain",
-  Clouds: "wi wi-day-cloudy",
-  Clear: "wi wi-day-sunny",
-  Snow: "wi wi-day-snow",
-  Mist: "wi wi-day-fog",
-  Drizzle: "wi wi-day-sleet",
-  Thunderstorm: "wi wi-day-"
+  Rain: "wi-day-rain",
+  Clouds: "wi-day-cloudy",
+  Clear: "wi-day-sunny",
+  Snow: "wi-day-snow",
+  Mist: "wi-day-fog",
+  Drizzle: "wi-day-sleet",
+  Thunderstorm: "wi-day-thunderstorm",
+  Haze: "wi-day-haze"
 };
 
 const capitalize = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };
 
-const toCelsius = (Fahrenheit) => {
-  return Fahrenheit*(9/5) + 32
-}
-
-async function main(/*withIP = true*/) {
-  let ville;
-
-
-  //J'ai commenté cette partie, car ma clé n'est plus valable et de toute façon je sais quel temps il fait chez moi. De plus il n'est même pas précis, car la ville qu'il m'affiche n'est pas la mienne ^^'
-  
-  // if(withIP) {
-  // const ip = await fetch("https://api.ipify.org?format=json")
-  //   .then((resultat) => resultat.json())
-  //   .then((json) => json.ip);
-  // ville = await fetch(`http://api.ipstack.com/${ip}?access_key=6c07fc5b95006b32ff0d9a4f6ef1b115`)
-  //   .then((resultat) => resultat.json())
-  //   .then((json) => json.city);
-  // } else {
-  ville = document.querySelector('#ville').textContent;
-  // }
+async function main() {
+  const ville = document.querySelector('#ville').textContent;
   const meteo = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=68cc43e3ca14e2819d7f4528461a2e32&lang=fr&units=metric`)
     .then((resultat) => resultat.json())
     .then((json) => json);
-    displayWeatherInfos(meteo)
+  const latitude = meteo.coord.lat;
+  const longitude = meteo.coord.lon;
+  const countryFuseauHoraire = await fetch(`https://timeapi.io/api/Time/current/coordinate?latitude=${latitude}&longitude=${longitude}`)
+    .then((resultat) => resultat.json())
+    .then((json) => json)
+  displayWeatherInfos(meteo);
+  displayFuseauHoraire(countryFuseauHoraire);
 }
 
-var now = new Date();
- 
-var annee   = now.getFullYear();
-var mois    = ('0'+(now.getMonth()+1)).slice(-2);
-var jour    = ('0'+now.getDate()   ).slice(-2);
-var heure   = ('0'+now.getHours()  ).slice(-2);
-var minute  = ('0'+now.getMinutes()).slice(-2);
+const villeEditable = document.querySelector('#ville');
 
-
-function displayWeatherInfos(data) {
-    const name = data.name;
-    const temperature = data.main.temp + '°C ';
-    //const newTemperature = Math.round(temperature)
-    const description = data.weather[0].description;
-    const conditions = data.weather[0].main;
-    const longitude = data.coord.lon;
-    const latitude = data.coord.lat;
-    const country = data.sys.country;
-    const titre = name + '  ' + country + '  ' + temperature + '  ' + capitalize(description);
-    const date = "Nous sommes le "+jour+"/"+mois+"/"+annee+" et il est "+heure+" heure "+minute+" minutes"
-    console.log(data)
-    
-
-    document.getElementById('ville').textContent = name;
-    document.getElementById('temperature').textContent = /*Math.round(*/temperature/*)*/;
-    document.getElementById('conditions').textContent = capitalize(description);
-    document.getElementById('lon').textContent = longitude;
-    document.getElementById('lat').textContent = latitude;
-    document.querySelector('#pays').textContent = country;
-    document.getElementsByTagName('title').textContent = titre;
-    document.getElementById('date').textContent = date
-    document.querySelector('i.wi').className = weatherIcons[conditions];
-
-    document.querySelector('title').textContent = titre;
-    document.body.className = conditions.toLowerCase();
-}
-
-const ville = document.querySelector('#ville');
-
-ville.addEventListener('click', () => {
-  ville.contentEditable = true;
+villeEditable.addEventListener('click', () => {
+  villeEditable.contentEditable = true;
 });
-ville.addEventListener('keydown', (event) => {
+villeEditable.addEventListener('keydown', (event) => {
   if (event.keyCode === 13) {
     event.preventDefault();
-    ville.contentEditable = false
+    villeEditable.contentEditable = false
     main(false)
   }
 })
+
+const now = new Date();
+const annee   = now.getFullYear();
+const mois    = ('0'+(now.getMonth()+1)).slice(-2);
+const jour    = ('0'+now.getDate()   ).slice(-2);
+const heure   = ('0'+now.getHours()  ).slice(-2);
+const minute  = ('0'+now.getMinutes()).slice(-2);
+
+const displayWeatherInfos = (data) => {
+  const name = data.name;
+  const temperature = data.main.temp + '°C ';
+  const feels_like = data.main.feels_like + '°C ';
+  const description = data.weather[0].description;
+  const conditions = data.weather[0].main;
+  const longitude = data.coord.lon;
+  const latitude = data.coord.lat;
+  const country = data.sys.country;
+  const titre = name + '  ' + country + '  ' + temperature + '  ' + capitalize(description);
+  console.log(data)
+  console.log(conditions)
+  
+  document.getElementById('ville').textContent = name;
+  document.getElementById('temperature').textContent = temperature;
+  document.getElementById('feels_like').textContent = feels_like;
+  document.getElementById('conditions').textContent = capitalize(description);
+  document.getElementById('lon').textContent = longitude;
+  document.getElementById('lat').textContent = latitude;
+  document.querySelector('#pays').textContent = country;
+  document.getElementById('i').classList.remove("wi-day-rain");
+  document.getElementById('i').classList.add(weatherIcons[conditions]);
+  document.querySelector('title').textContent = titre;
+  document.body.className = conditions.toLowerCase();
+}
+
+displayFuseauHoraire = (data) => {
+  switch (data.dayOfWeek) {
+    case "Monday":
+      data.dayOfWeek = "Lundi";
+      break;
+    case "Tuesday":
+    data.dayOfWeek = "Mardi";
+      break;
+    case "Wednesday":
+      data.dayOfWeek = "Mercredi";
+      break;
+    case "Thursday":
+      data.dayOfWeek = "Jeudi";
+      break;
+    case "Friday":
+      data.dayOfWeek = "Vendredi";
+      break;
+    case "Saturday":
+      data.dayOfWeek = "Samadi";
+      break;
+    default: data.dayOfWeek = "Dimanche";
+      break;
+  }
+
+  const ville = document.querySelector('#ville').textContent;
+  const mois = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+  const date = `A "${ville}" nous somme le ${data.dayOfWeek} ${data.day} ${mois[data.month-1]} et il est ${data.time.slice(0,2)} h ${data.time.slice(3)}`
+  const timeZone = data.timeZone;
+
+  document.getElementById('date').textContent = date;
+  document.getElementById('timeZone').textContent = timeZone;
+  
+  console.log(data);
+}
 
 main();

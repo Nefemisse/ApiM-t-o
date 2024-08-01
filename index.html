@@ -7,32 +7,28 @@
     <link rel="stylesheet" href="./style/style.css">
     <link type="text/css" rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
     <title>My Météo app</title>
-    <meta http-equiv="refresh" content="30">
-    
   </head>
   <body>
-
-    <video>
-      <source src="#" type="video/mp4">
-    </video>
-    
     <section id="app">
-
       <h1>
         <span id="ville">Sartrouville</span>
         <span class="tooltip">Entrez une ville existante de votre choix.</span>
       </h1>
 
-      <i class="wi wi-day-rain"></i>
+      <i id="i" class="wi wi-day-rain"></i>
 
       <h2>
         <span id="temperature">25</span>(<span id="conditions">nuageux</span>)
       </h2>
+      <h3>
+        <span>Température ressentie : </span><span id="feels_like">25</span>
+      </h3> 
       <h3 id="detail">Détails
         <div class="detail">
-          <span id="date">Nous sommes le "+jour+"/"+mois+"/"+annee+" et il est "+heure+" heure "+minute+" minutes "</span>
-          <span>Longitude : <span id="lon">54.45</span></span>
+          <span id="date">Salut les connards, il est 15h35</span>
           <span>Latitude : <span id="lat">54.2</span></span>
+          <span>Longitude : <span id="lon">54.45</span></span>
+          <span>Fuseau Horaire : <span id="timeZone">Pacifique/Atlantide</span></span>
           <span>Pays : <span id="pays">FR</span></span>
         </div>
       </h3>
